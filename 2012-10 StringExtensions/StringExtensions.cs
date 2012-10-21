@@ -20,6 +20,7 @@
 namespace System
 {
     using System;
+    using System.Text;
 
     public static class StringExtensions
     {
@@ -32,6 +33,66 @@ namespace System
         public static string FormatWith(this String format, params object[] args)
         {
             return String.Format(format, args);
+        }
+        /// <summary>
+        /// Reverses characters in a specified string.
+        /// </summary>
+        /// <param name="input">A string to format.</param>
+        /// <returns>A copy of input which characters have been reversed.</returns>
+        public static string Reverse(this String input)
+        {
+            char[] arr = input.ToCharArray();
+            Array.Reverse(arr);
+            return new String(arr);
+        }
+        /// <summary>
+        /// Converts an entire string from one encoding to another.
+        /// </summary>
+        /// <param name="input">The string to convert.</param>
+        /// <param name="srcEncoding">The encoding format of string.</param>
+        /// <param name="dstEncoding">The target encoding format.</param>
+        /// <returns>An System.String containing the results of converting the input string from srcEncoding to dstEncoding.</returns>
+        public static string Encode(this String input, Encoding srcEncoding, Encoding dstEncoding)
+        {
+            return ToStringEncoded(Encoding.Convert(srcEncoding, dstEncoding, input.ToByteArray()), dstEncoding);
+        }
+        /// <summary>
+        /// Encodes all the characters in the specified string into a sequence of bytes with the default Encoder (ANSI).
+        /// </summary>
+        /// <param name="input">The System.String containing the characters to encode.</param>
+        /// <returns>A byte array containing the results of encoding the specified set of characters.</returns>
+        public static byte[] ToByteArray(this String input)
+        {
+            return ToByteArray(input, Encoding.Default);
+        }
+        /// <summary>
+        /// Encodes all the characters in the specified string into a sequence of bytes.
+        /// </summary>
+        /// <param name="input">The System.String containing the characters to encode.</param>
+        /// <param name="encoding">The System.Text.Encoding to use for encoding.</param>
+        /// <returns>A byte array containing the results of encoding the specified set of characters.</returns>
+        public static byte[] ToByteArray(this String input, Encoding encoding)
+        {
+            return encoding.GetBytes(input);
+        }
+        /// <summary>
+        /// Decodes all the bytes in the specified byte array to a System.String with the default Encoder (ANSI).
+        /// </summary>
+        /// <param name="input">The byte array containing the sequence of bytes to decode.</param>
+        /// <returns>A System.String containing the results of decoding the specified sequence of bytes.</returns>
+        public static string ToStringEncoded(this byte[] input)
+        {
+            return ToStringEncoded(input, Encoding.Default);
+        }
+        /// <summary>
+        /// Decodes all the bytes in the specified byte array to a System.String with the Encoder provided.
+        /// </summary>
+        /// <param name="input">The byte array containing the sequence of bytes to decode.</param>
+        /// <param name="encoding">The System.Text.Encoding to use for decoding.</param>
+        /// <returns>A System.String containing the results of decoding the specified sequence of bytes.</returns>
+        public static string ToStringEncoded(this byte[] input, Encoding encoding)
+        {
+            return encoding.GetString(input);
         }
     }
 }
