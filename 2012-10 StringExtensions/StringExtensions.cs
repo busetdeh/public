@@ -54,7 +54,7 @@ namespace System
         /// <returns>An System.String containing the results of converting the input string from srcEncoding to dstEncoding.</returns>
         public static string Encode(this String input, Encoding srcEncoding, Encoding dstEncoding)
         {
-            return ToStringEncoded(Encoding.Convert(srcEncoding, dstEncoding, input.ToByteArray()), dstEncoding);
+            return ToStringEncoded(Encoding.Convert(srcEncoding, dstEncoding, srcEncoding.GetBytes(input)), dstEncoding);
         }
         /// <summary>
         /// Encodes all the characters in the specified string into a sequence of bytes with the default Encoder (ANSI).
